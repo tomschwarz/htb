@@ -15,7 +15,6 @@ sessionExists=$(tmux list-sessions | grep $session)
 # Create's the session and all basic workspaces
 create_session()
 {
-
     # Create session
     tmux new-session -d -s $session
 
