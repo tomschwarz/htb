@@ -1,7 +1,13 @@
 #!/bin/bash
 
 # Configuration
-ovpnPath="" # FILL THIS!
+
+# Standard VIP connection
+#ovpnPath="/home/qwertty/htb/qwertty.ovpn"
+
+# Dante Pro-Lab connection
+ovpnPath="/home/qwertty/htb/qwertty-eu-dante-1.ovpn"
+
 boxPath="~/htb/"
 if [ "$1" != "" ]
 then
@@ -23,10 +29,16 @@ create_session()
     tmux rename-window -t 0 $nameWinOne
     tmux send-keys -t $nameWinOne "sudo openvpn ${ovpnPath}" C-m
 
-    # Prepare second workspace > Box root folder
-    nameWinTwo="box"
+    # Prepare second workspace > Note taking
+    nameWinTwo="notes"
     tmux new-window -t $session:1 -n $nameWinTwo
     tmux send-keys -t $nameWinTwo "cd ${boxPath}" C-m "clear" C-m
+    
+    # Prepare second workspace > Box root folder
+    nameWinThree="box"
+    tmux new-window -t $session:2 -n $nameWinThree
+    tmux send-keys -t $nameWinThree "cd ${boxPath}" C-m "clear" C-m
+
 }
 
 # Check if session exists
@@ -36,4 +48,4 @@ then
 fi
 
 # Attach Session on Box workspace
-tmux attach-session -t $session:1
+tmux attach-session -t $session:2
